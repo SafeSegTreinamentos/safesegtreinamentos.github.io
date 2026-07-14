@@ -885,7 +885,7 @@ document.getElementById('btnGerarTurma').addEventListener('click', async ()=>{
   document.getElementById('previewCode').style.display='inline-block';
   document.getElementById('previewCode').textContent = 'Turma gerada: '+turma.codigo;
   document.getElementById('printRoot').style.display='block';
-  toast(`Turma ${turma.codigo} gerada e salva${url?' na nuvem':''}`);
+  toast(`Turma ${turma.codigo} gerada${url?' e salva na nuvem':''}${turma.pdfUrl?' — PDF salvo no Drive':''}`);
   setTimeout(()=>window.print(), 400);
 });
 
@@ -929,6 +929,7 @@ async function renderHistorico(){
         <div class="meta">${t.curso} · ${t.tipo} · ${t.alunos.length} aluno(s) · ${t.dias.length} dia(s) · ${t.empresa||'sem empresa'}</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${t.pdfUrl ? `<a class="btn secondary small" href="${t.pdfUrl}" target="_blank" rel="noopener">Abrir PDF</a>` : ''}
         <button class="btn ghost small" onclick="copyTurmaLink('${t.id}')">Copiar link</button>
         <button class="btn secondary small" onclick="reprintTurma('${t.id}')">Reimprimir</button>
         <button class="btn danger small" onclick="deleteTurma('${t.id}')">Excluir</button>
