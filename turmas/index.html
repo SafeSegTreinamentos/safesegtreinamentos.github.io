@@ -288,6 +288,7 @@ table.tbl td input{padding:6px 8px;font-size:13px;}
       <h2>Catálogo de cursos</h2>
       <div class="actions-bar" style="justify-content:flex-start;margin-top:0;margin-bottom:14px;">
         <button class="btn secondary small" id="btnAddCurso">+ Novo curso</button>
+        <button class="btn ghost small" id="btnSyncCursos">☁ Sincronizar catálogo com a nuvem</button>
       </div>
       <div id="cursosList"></div>
     </div>
@@ -394,7 +395,13 @@ async function checkCloudStatus(){
     const data = await cloudGet({action:'list'});
     if(!data || !data.ok) throw new Error((data&&data.error)||'resposta inválida');
     saveTurmas(data.turmas||[]);
-    if(data.cursos && data.cursos.length){ saveCursos(data.cursos); populateCursoSelect(); }
+    if(data.cursos && data.cursos.length){
+      saveCursos(data.cursos);
+      populateCursoSelect();
+    } else if(loadCursos().length){
+      // nuvem ainda sem catálogo (primeira conexão) — envia o catálogo local automaticamente
+      await pushCursosToCloud();
+    }
     setCloudBanner('✅ Conectado à nuvem — histórico sincronizado entre dispositivos.','on');
   }catch(err){
     setCloudBanner('⚠️ Não foi possível conectar à nuvem ('+err.message+'). Usando dados salvos neste aparelho.','error');
@@ -1008,6 +1015,12 @@ document.getElementById('btnAddCurso').addEventListener('click',()=>{
   renderCursos();
   populateCursoSelect();
   pushCursosToCloud();
+});
+document.getElementById('btnSyncCursos').addEventListener('click', async ()=>{
+  if(!getAppsUrl()){ toast('Conecte a sincronização primeiro (aba Nova Turma)'); return; }
+  toast('Enviando catálogo para a nuvem...');
+  await pushCursosToCloud();
+  toast('Catálogo sincronizado com a nuvem');
 });
 
 /* ============================================================
