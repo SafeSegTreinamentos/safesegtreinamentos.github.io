@@ -31,12 +31,14 @@ h1 span{color:var(--amber);}
 .card.active{cursor:pointer;}
 .card.active:hover{transform:translateY(-3px);border-color:var(--amber);}
 .card.soon{opacity:.55;cursor:default;}
+.card.soon.next{opacity:.85;border-color:var(--amber-dark);}
 .card .icon{font-size:28px;}
 .card h2{font-family:'Bebas Neue',Arial,sans-serif;font-size:22px;letter-spacing:.5px;color:#fff;margin:0;}
 .card p{font-size:13px;color:var(--muted);margin:0;line-height:1.5;}
 .badge{position:absolute;top:16px;right:16px;font-size:10px;font-weight:800;letter-spacing:.5px;padding:4px 10px;border-radius:20px;text-transform:uppercase;}
 .badge.on{background:rgba(34,197,94,.15);border:1px solid var(--ok);color:#6EE7A0;}
 .badge.off{background:rgba(154,160,166,.12);border:1px solid var(--line);color:var(--muted);}
+.badge.next{background:rgba(245,158,11,.15);border:1px solid var(--amber);color:var(--amber);}
 .footer{text-align:center;margin-top:50px;color:var(--muted);font-size:12px;line-height:1.8;}
 .footer strong{color:var(--amber);}
 </style>
@@ -57,6 +59,20 @@ h1 span{color:var(--amber);}
       <h2>Gerador de Turmas</h2>
       <p>Cria turmas, gera código único e lista de presença em PDF (frente e verso), sincronizado entre dispositivos.</p>
     </a>
+
+    <a class="card active" href="dossie/">
+      <span class="badge on">Ativo</span>
+      <div class="icon">🗂️</div>
+      <h2>Dossiê Técnico</h2>
+      <p>Monta o dossiê completo do treinamento por turma — relatório, presença, fotos, certificados e anexos, pronto pra imprimir.</p>
+    </a>
+
+    <div class="card soon next">
+      <span class="badge next">Próximo</span>
+      <div class="icon">📝</div>
+      <h2>Propostas</h2>
+      <p>Geração de propostas comerciais para clientes — cursos, valores e condições, prontas pra enviar.</p>
+    </div>
 
     <div class="card soon">
       <span class="badge off">Em breve</span>
