@@ -247,11 +247,11 @@ async function checkCloudStatus(){
     setCloudBanner('⚠️ Não foi possível conectar (' + err.message + ').','error');
   }
 }
-function toast(msg){
+function toast(msg, duration){
   const t=document.getElementById('toast');
   t.textContent=msg; t.style.display='block';
   clearTimeout(window.__toastTimer);
-  window.__toastTimer=setTimeout(()=>t.style.display='none',3200);
+  window.__toastTimer=setTimeout(()=>t.style.display='none', duration || 3200);
 }
 
 /* ============================================================
@@ -442,6 +442,10 @@ async function onFilesSelected(e){
   if(!files.length) return;
   if(!numeroAtual){ toast('Carregue um número de turma primeiro'); return; }
 
+  // preserva o que já está digitado no formulário antes de mexer em qualquer coisa
+  coletarEstadoFormulario();
+
+  let algumErro = false;
   for(const file of files){
     toast('Enviando ' + file.name + '...');
     try{
@@ -464,12 +468,21 @@ async function onFilesSelected(e){
       if(!data || !data.ok) throw new Error((data&&data.error)||'falha ao enviar');
       evidenciasAtuais.unshift(data.evidencia);
     }catch(err){
-      toast('Erro ao enviar ' + file.name + ': ' + err.message);
+      algumErro = true;
+      toast('Erro ao enviar ' + file.name + ': ' + err.message, 7000);
+      console.error('Falha no upload de', file.name, err);
     }
   }
   e.target.value = '';
-  renderCategorias();
-  toast('Upload concluído');
+  refreshGridForCategoria(categoria);
+  if(!algumErro) toast('Upload concluído');
+}
+
+function refreshGridForCategoria(catKey){
+  const grid = document.getElementById('grid-' + catKey);
+  if(!grid) return;
+  const itens = evidenciasAtuais.filter(e=>e.categoria===catKey);
+  grid.innerHTML = itens.length ? itens.map(itemHtml).join('') : '<div class="empty-note">Nenhum arquivo anexado nesta categoria ainda.</div>';
 }
 
 function readFileAsBase64(file){
@@ -506,10 +519,12 @@ function resizeImageFile(file, maxDim, quality){
 
 async function excluirEvidencia(id){
   if(!confirm('Excluir este arquivo?')) return;
+  const item = evidenciasAtuais.find(e=>e.id===id);
+  const categoria = item ? item.categoria : null;
   try{
     await cloudPost({action:'deleteEvidencia', id});
     evidenciasAtuais = evidenciasAtuais.filter(e=>e.id!==id);
-    renderCategorias();
+    if(categoria) refreshGridForCategoria(categoria);
     toast('Arquivo excluído');
   }catch(err){
     toast('Erro ao excluir: '+err.message);
