@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeSeg | Dossiê Técnico do Treinamento</title>
+<style>
+:root{
+  --amber:#F59E0B;
+  --amber-dark:#B45309;
+  --graphite:#14171B;
+  --graphite2:#1D2126;
+  --graphite3:#262B32;
+  --line:#33393f;
+  --text:#E9E9E7;
+  --muted:#9AA0A6;
+  --ok:#22C55E;
+  --danger:#EF4444;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Inter',Arial,sans-serif;background:var(--graphite);color:var(--text);}
+.hazard{height:6px;background:repeating-linear-gradient(45deg,var(--amber) 0 14px,#111 14px 28px);}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px 100px;}
+.header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.badge{width:46px;height:46px;border-radius:50%;background:#0b0d10;border:2px solid var(--amber);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',Arial,sans-serif;color:var(--amber);font-size:14px;}
+h1{font-family:'Bebas Neue',Arial,sans-serif;font-size:26px;letter-spacing:1px;color:#fff;margin:0;}
+h1 span{color:var(--amber);}
+.subtitle{color:var(--muted);font-size:13px;margin-top:-2px;}
+.card{background:var(--graphite2);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px;}
+.card h2{font-family:'Bebas Neue',Arial,sans-serif;font-size:19px;color:#fff;margin:0 0 10px;letter-spacing:.5px;}
+label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+input,select,textarea{width:100%;background:#0f1215;border:1px solid var(--line);color:var(--text);padding:9px 10px;border-radius:6px;font-size:14px;font-family:inherit;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--amber);}
+textarea{resize:vertical;min-height:70px;}
+.field{margin-bottom:12px;}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end;}
+.row>*{flex:1;min-width:180px;}
+.btn{background:var(--amber);color:#111;border:none;padding:9px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px;}
+.btn:hover{background:#ffb020;}
+.btn.secondary{background:transparent;border:1px solid var(--amber);color:var(--amber);}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted);}
+.btn.danger{background:transparent;border:1px solid var(--danger);color:var(--danger);}
+.btn.small{padding:6px 10px;font-size:12px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.sync-banner{padding:10px 14px;border-radius:6px;font-size:12.5px;font-weight:600;margin-top:10px;}
+.sync-banner.on{background:rgba(34,197,94,.12);border:1px solid var(--ok);color:#6EE7A0;}
+.sync-banner.off{background:rgba(154,160,166,.1);border:1px solid var(--line);color:var(--muted);}
+.sync-banner.pending{background:rgba(245,158,11,.12);border:1px solid var(--amber);color:var(--amber);}
+.sync-banner.error{background:rgba(239,68,68,.12);border:1px solid var(--danger);color:#FCA5A5;}
+.turma-info{background:var(--graphite3);border:1px solid var(--amber-dark);border-radius:8px;padding:14px 16px;margin-bottom:16px;display:none;}
+.turma-info.show{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.turma-info .code{font-family:'Bebas Neue',Arial,sans-serif;color:var(--amber);font-size:20px;letter-spacing:1px;}
+.turma-info .meta{font-size:13px;color:var(--muted);margin-top:2px;}
+.status-pill{font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;}
+.status-pill.rascunho{background:rgba(245,158,11,.15);color:var(--amber);border:1px solid var(--amber-dark);}
+.status-pill.finalizado{background:rgba(34,197,94,.15);color:#6EE7A0;border:1px solid var(--ok);}
+.cat-section{display:none;}
+.cat-section.show{display:block;}
+.cat-card{background:var(--graphite2);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+.cat-card.excluded{opacity:.45;}
+.cat-card .cat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.cat-card h3{font-family:'Bebas Neue',Arial,sans-serif;font-size:17px;color:#fff;margin:0;letter-spacing:.5px;}
+.cat-card .cat-num{color:var(--amber);margin-right:6px;}
+.cat-toggle{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none;}
+.cat-toggle input{width:16px;height:16px;accent-color:var(--amber);}
+.file-input-label{display:inline-block;background:transparent;border:1px solid var(--amber);color:var(--amber);padding:7px 14px;border-radius:6px;font-size:12.5px;font-weight:700;cursor:pointer;}
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px;}
+.item{background:var(--graphite3);border:1px solid var(--line);border-radius:8px;overflow:hidden;position:relative;}
+.item img{width:100%;height:90px;object-fit:cover;display:block;}
+.item .doc-icon{height:90px;display:flex;align-items:center;justify-content:center;font-size:28px;background:#0f1215;}
+.item .item-name{font-size:10.5px;padding:6px 8px;color:var(--muted);word-break:break-all;}
+.item .item-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:var(--danger);border:none;border-radius:4px;width:20px;height:20px;font-size:12px;cursor:pointer;}
+.empty-note{font-size:12.5px;color:var(--muted);font-style:italic;}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--graphite3);border:1px solid var(--amber);color:#fff;padding:12px 18px;border-radius:8px;z-index:999;display:none;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.5);max-width:340px;}
+.action-bar{position:sticky;bottom:0;background:var(--graphite2);border-top:1px solid var(--line);padding:14px 20px;display:flex;justify-content:flex-end;gap:10px;margin:0 -20px;flex-wrap:wrap;}
+
+/* ===== IMPRESSÃO ===== */
+#printRoot{display:none;}
+.pg{background:#fff;color:#111;width:210mm;min-height:296mm;margin:0 auto 24px;padding:16mm 16mm;font-family:Arial,Helvetica,sans-serif;box-shadow:0 0 20px rgba(0,0,0,.4);}
+.pg-cover .brand{text-align:center;margin-bottom:30px;}
+.pg-cover h1{font-family:'Bebas Neue',Arial,sans-serif;font-size:30px;margin:6px 0 0;}
+.pg-cover .tag{color:#F59E0B;font-weight:800;letter-spacing:2px;font-size:12px;}
+.pg-cover .info{font-size:10px;color:#333;margin-top:4px;}
+.pg-cover .idx-title{background:#111;color:#F59E0B;text-align:center;font-weight:800;font-size:14px;letter-spacing:1px;padding:8px;margin:26px 0 14px;}
+.pg-cover table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px;}
+.pg-cover table td,.pg-cover table th{border:1px solid #111;padding:6px 8px;}
+.pg-cover .idx-item{display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px solid #ddd;font-size:13px;}
+.pg-cover .idx-item.excluded{color:#bbb;text-decoration:line-through;}
+.pg-cover .idx-item .n{color:#B45309;font-weight:800;margin-right:8px;}
+.pg-cover .idx-item .st{font-size:11px;color:#888;}
+.pg-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:250mm;}
+.pg-divider .num{font-family:'Bebas Neue',Arial,sans-serif;font-size:80px;color:#111;opacity:.12;}
+.pg-divider .title{font-family:'Bebas Neue',Arial,sans-serif;font-size:34px;letter-spacing:1px;color:#111;margin-top:-40px;}
+.pg-divider .under{width:120px;height:5px;background:#F59E0B;margin:14px 0;}
+.pg-divider .sub{font-size:12px;color:#666;}
+.pg-content h4{font-family:'Bebas Neue',Arial,sans-serif;background:#111;color:#F59E0B;text-align:center;padding:8px;font-size:15px;letter-spacing:1px;margin:0 0 14px;}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.photo-grid .ph{border:1px solid #111;padding:6px;}
+.photo-grid img{width:100%;height:70mm;object-fit:cover;display:block;}
+.photo-grid .cap{font-size:9px;color:#333;margin-top:4px;}
+.doc-list{list-style:none;padding:0;font-size:12px;}
+.doc-list li{border:1px solid #111;padding:8px 10px;margin-bottom:6px;display:flex;justify-content:space-between;}
+.doc-list .fn{font-weight:700;}
+.doc-list .desc{color:#555;}
+.content-text{border:1px solid #111;padding:12px 14px;font-size:12px;line-height:1.7;white-space:pre-wrap;}
+.report-table{width:100%;border-collapse:collapse;font-size:12px;}
+.report-table td{border:1px solid #111;padding:8px 10px;}
+.report-table .lb{background:#f0f0f0;font-weight:bold;width:28%;}
+
+@media print{
+  body{background:#fff;}
+  .no-print{display:none !important;}
+  #printRoot{display:block;}
+  .pg{box-shadow:none;margin:0;width:auto;min-height:auto;page-break-after:always;}
+  .pg:last-child{page-break-after:auto;}
+  @page{size:A4;margin:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap no-print">
+  <div class="header">
+    <div class="badge">ST</div>
+    <div>
+      <h1>Dossiê <span>Técnico do Treinamento</span></h1>
+      <div class="subtitle">Documento completo pra entregar ao cliente — 100% manual, sem depender de outro cadastro</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sincronização</h2>
+    <div class="row">
+      <div style="flex:3;">
+        <label>URL do Apps Script (a mesma do sistema de Turmas)</label>
+        <input id="fAppsUrl" placeholder="https://script.google.com/macros/s/.../exec">
+      </div>
+      <div><button class="btn secondary small" id="btnSaveAppsUrl">Conectar</button></div>
+    </div>
+    <div class="sync-banner off" id="cloudStatus">Modo local — configure a URL do Apps Script para conectar.</div>
+  </div>
+
+  <div class="card">
+    <h2>1. Número da turma</h2>
+    <div class="row">
+      <div>
+        <label>Digite o número/código que identifica esta turma</label>
+        <input id="fNumeroTurma" placeholder="Ex: 2026071401 ou qualquer identificação sua">
+      </div>
+      <div><button class="btn secondary small" id="btnCarregarTurma">Carregar / Criar dossiê</button></div>
+    </div>
+    <div class="empty-note" style="margin-top:6px;">Se já existir um rascunho salvo com esse número, ele é carregado automaticamente. Se não existir, começa um dossiê novo.</div>
+  </div>
+
+  <div class="turma-info" id="turmaInfo">
+    <div>
+      <div class="code" id="turmaInfoCode"></div>
+      <div class="meta" id="turmaInfoMeta"></div>
+    </div>
+    <span class="status-pill rascunho" id="statusPill">rascunho</span>
+  </div>
+
+  <div class="cat-section" id="catSection"></div>
+</div>
+
+<div class="action-bar no-print" id="actionBar" style="display:none;">
+  <div class="empty-note" style="flex:1;align-self:center;">Salve o rascunho quantas vezes precisar. Quando estiver pronto, finalize — e gere o PDF quando quiser, mesmo em outro dia ou aparelho.</div>
+  <button class="btn ghost" id="btnVisualizar">🖨 Visualizar / Gerar PDF</button>
+  <button class="btn secondary" id="btnSalvarRascunho">💾 Salvar rascunho</button>
+  <button class="btn" id="btnFinalizar">✅ Finalizar dossiê</button>
+</div>
+
+<div id="printRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CATEGORIAS (na ordem do dossiê físico)
+============================================================ */
+const CATEGORIAS = [
+  { key:'relatorio',    num:'01', label:'Relatório do Treinamento',           kind:'relatorio' },
+  { key:'presenca',     num:'02', label:'Lista de Presença',                  kind:'upload' },
+  { key:'avaliacoes',   num:'03', label:'Avaliações',                         kind:'upload' },
+  { key:'fotos',        num:'04', label:'Evidências Fotográficas',            kind:'upload', isPhoto:true },
+  { key:'certificados', num:'05', label:'Certificados',                       kind:'upload' },
+  { key:'instrutor',    num:'06', label:'Documentação do Instrutor',          kind:'upload' },
+  { key:'conteudo',     num:'07', label:'Conteúdo Programático',              kind:'conteudo' },
+  { key:'anexos',       num:'08', label:'Anexos (APR, PET, Checklists)',      kind:'upload' },
+];
+
+let numeroAtual = null;
+let evidenciasAtuais = [];
+let cursosCache = [];
+let dossieState = null; // { relatorio:{curso,numero,cliente,cnpj,intercorrencias}, conteudoOverride:'', categorias:{}, status }
+
+function defaultDossieState(){
+  const cats = {};
+  CATEGORIAS.forEach(c => cats[c.key] = true);
+  return {
+    relatorio: { curso:'', numero:'', cliente:'', cnpj:'', intercorrencias:'' },
+    conteudoOverride: '',
+    categorias: cats,
+    status: 'rascunho'
+  };
+}
+
+/* ============================================================
+   SINCRONIZAÇÃO
+============================================================ */
+const LS_APPS_URL = 'safeseg_apps_url_v1';
+function getAppsUrl(){ return (localStorage.getItem(LS_APPS_URL)||'').trim(); }
+function setAppsUrl(u){ localStorage.setItem(LS_APPS_URL, u.trim()); }
+
+async function cloudGet(params){
+  const url = getAppsUrl();
+  if(!url) return null;
+  const qs = new URLSearchParams(params).toString();
+  const res = await fetch(url + (url.includes('?')?'&':'?') + qs);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  return await res.json();
+}
+async function cloudPost(payload){
+  const url = getAppsUrl();
+  if(!url) return null;
+  const res = await fetch(url, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  });
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  return await res.json();
+}
+function setCloudBanner(text, cls){
+  const b=document.getElementById('cloudStatus');
+  b.textContent=text; b.className='sync-banner '+cls;
+}
+async function checkCloudStatus(){
+  const url=getAppsUrl();
+  if(!url){ setCloudBanner('Modo local — configure a URL do Apps Script para conectar.','off'); return; }
+  setCloudBanner('Conectando à nuvem...','pending');
+  try{
+    const data = await cloudGet({action:'list'});
+    if(!data || !data.ok) throw new Error((data&&data.error)||'resposta inválida');
+    cursosCache = data.cursos || [];
+    setCloudBanner('✅ Conectado à nuvem.','on');
+  }catch(err){
+    setCloudBanner('⚠️ Não foi possível conectar (' + err.message + ').','error');
+  }
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>t.style.display='none',3200);
+}
+
+/* ============================================================
+   CARREGAR / CRIAR DOSSIÊ PELO NÚMERO DA TURMA
+============================================================ */
+document.getElementById('btnCarregarTurma').addEventListener('click', carregarOuCriarDossie);
+async function carregarOuCriarDossie(){
+  const numero = document.getElementById('fNumeroTurma').value.trim();
+  if(!numero){ toast('Digite o número da turma'); return; }
+  const url = getAppsUrl();
+  if(!url){ toast('Conecte a sincronização primeiro'); return; }
+  toast('Carregando...');
+  try{
+    if(cursosCache.length === 0){
+      const listData = await cloudGet({action:'list'});
+      if(listData && listData.ok) cursosCache = listData.cursos || [];
+    }
+
+    let dossieSalvo = null;
+    try{
+      const dData = await cloudGet({action:'dossie', turmaCodigo: numero});
+      if(dData && dData.ok) dossieSalvo = dData.dossie;
+    }catch(err){ /* segue com padrão se falhar */ }
+
+    dossieState = dossieSalvo || defaultDossieState();
+    if(!dossieState.relatorio.numero) dossieState.relatorio.numero = numero;
+    numeroAtual = numero;
+
+    toast(dossieSalvo ? 'Rascunho anterior carregado' : 'Novo dossiê iniciado');
+
+    mostrarInfoBasica();
+    await carregarEvidencias(numero);
+    renderCategorias();
+    document.getElementById('actionBar').style.display='flex';
+  }catch(err){
+    toast('Erro ao carregar: '+err.message);
+  }
+}
+function mostrarInfoBasica(){
+  const box = document.getElementById('turmaInfo');
+  box.classList.add('show');
+  document.getElementById('turmaInfoCode').textContent = numeroAtual;
+  const r = dossieState.relatorio;
+  document.getElementById('turmaInfoMeta').textContent = [r.curso, r.cliente].filter(Boolean).join(' · ') || 'preencha os dados no Relatório do Treinamento';
+  atualizarStatusPill();
+}
+function atualizarStatusPill(){
+  const pill = document.getElementById('statusPill');
+  pill.textContent = dossieState.status;
+  pill.className = 'status-pill ' + dossieState.status;
+}
+
+async function carregarEvidencias(numero){
+  try{
+    const data = await cloudGet({action:'evidencias', turmaCodigo: numero});
+    evidenciasAtuais = (data && data.ok) ? (data.evidencias||[]) : [];
+  }catch(err){
+    evidenciasAtuais = [];
+    toast('Não foi possível carregar evidências salvas: '+err.message);
+  }
+}
+
+/* ============================================================
+   RENDERIZAR CATEGORIAS
+============================================================ */
+function renderCategorias(){
+  const box = document.getElementById('catSection');
+  box.classList.add('show');
+  box.innerHTML = CATEGORIAS.map(cat=>{
+    const incluido = dossieState.categorias[cat.key] !== false;
+    let bodyHtml = '';
+
+    if(cat.kind === 'relatorio'){
+      const r = dossieState.relatorio;
+      const opcoesCurso = cursosCache.map(c=>
+        `<option value="${esc(c.nome)}" ${c.nome===r.curso?'selected':''}>${esc(c.nome)}</option>`
+      ).join('');
+      bodyHtml = `
+        <div class="row">
+          <div class="field">
+            <label>Curso</label>
+            <select id="rel-curso">
+              <option value="">Selecione o curso...</option>
+              ${opcoesCurso}
+            </select>
+          </div>
+          <div class="field"><label>Número da turma</label><input id="rel-numero" value="${esc(r.numero)}"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Empresa (cliente)</label><input id="rel-cliente" value="${esc(r.cliente)}" placeholder="Nome da empresa"></div>
+          <div class="field"><label>CNPJ</label><input id="rel-cnpj" value="${esc(r.cnpj)}" placeholder="00.000.000/0000-00"></div>
+        </div>
+        <div class="field">
+          <label>Intercorrências / Informações importantes</label>
+          <textarea id="rel-intercorrencias" placeholder="Alguma ocorrência durante o treinamento, observação para o cliente, etc. (opcional)">${esc(r.intercorrencias)}</textarea>
+        </div>`;
+    } else if(cat.kind === 'conteudo'){
+      bodyHtml = `
+        <div class="cat-head" style="margin-bottom:8px;">
+          <label style="margin:0;flex:1;">Conteúdo programático (preenchido automaticamente ao escolher o curso — pode editar à vontade)</label>
+          <button type="button" class="btn ghost small" id="btnResetConteudo">↺ Usar padrão do curso</button>
+        </div>
+        <textarea id="conteudo-override" style="min-height:120px;">${esc(dossieState.conteudoOverride)}</textarea>`;
+    } else {
+      const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
+      bodyHtml = `
+        <div class="cat-head" style="margin-bottom:0;">
+          <label class="file-input-label">
+            + Adicionar arquivo
+            <input type="file" multiple style="display:none;" data-cat="${cat.key}" class="cat-file-input" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx">
+          </label>
+        </div>
+        <div class="item-grid" id="grid-${cat.key}">
+          ${itens.length ? itens.map(itemHtml).join('') : '<div class="empty-note">Nenhum arquivo anexado nesta categoria ainda.</div>'}
+        </div>`;
+    }
+
+    return `
+    <div class="cat-card ${incluido?'':'excluded'}" data-catkey="${cat.key}">
+      <div class="cat-head">
+        <h3><span class="cat-num">${cat.num}</span>${cat.label}</h3>
+        <label class="cat-toggle">
+          <input type="checkbox" class="cat-include" data-cat="${cat.key}" ${incluido?'checked':''}>
+          Incluir no dossiê
+        </label>
+      </div>
+      ${bodyHtml}
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.cat-file-input').forEach(inp=>{
+    inp.addEventListener('change', onFilesSelected);
+  });
+  document.querySelectorAll('.cat-include').forEach(chk=>{
+    chk.addEventListener('change', (e)=>{
+      const key = e.target.getAttribute('data-cat');
+      dossieState.categorias[key] = e.target.checked;
+      const card = document.querySelector('.cat-card[data-catkey="'+key+'"]');
+      card.classList.toggle('excluded', !e.target.checked);
+    });
+  });
+
+  const cursoSel = document.getElementById('rel-curso');
+  if(cursoSel){
+    cursoSel.addEventListener('change', (e)=>{
+      const cursoNome = e.target.value;
+      const conteudoEl = document.getElementById('conteudo-override');
+      if(conteudoEl && !conteudoEl.value.trim()){
+        const c = cursosCache.find(c=>c.nome===cursoNome);
+        if(c) conteudoEl.value = c.conteudo || '';
+      }
+    });
+  }
+  const btnReset = document.getElementById('btnResetConteudo');
+  if(btnReset){
+    btnReset.addEventListener('click', ()=>{
+      const cursoNome = document.getElementById('rel-curso').value;
+      const c = cursosCache.find(c=>c.nome===cursoNome);
+      if(!c){ toast('Selecione um curso primeiro'); return; }
+      document.getElementById('conteudo-override').value = c.conteudo || '';
+      toast('Conteúdo padrão restaurado');
+    });
+  }
+}
+function esc(s){ return (s==null?'':String(s)).replace(/"/g,'&quot;'); }
+
+function itemHtml(ev){
+  const isImg = (ev.mimeType||'').startsWith('image/');
+  const thumbUrl = 'https://drive.google.com/uc?export=view&id=' + ev.driveFileId;
+  const inner = isImg
+    ? `<img src="${thumbUrl}" alt="${ev.nomeArquivo}" loading="lazy">`
+    : `<div class="doc-icon">📄</div>`;
+  return `<div class="item">
+    <button class="item-del" onclick="excluirEvidencia('${ev.id}')" title="Excluir">✕</button>
+    <a href="${ev.driveUrl}" target="_blank" style="color:inherit;text-decoration:none;">
+      ${inner}
+      <div class="item-name">${ev.nomeArquivo}</div>
+    </a>
+  </div>`;
+}
+
+/* ============================================================
+   UPLOAD
+============================================================ */
+async function onFilesSelected(e){
+  const categoria = e.target.getAttribute('data-cat');
+  const files = Array.from(e.target.files || []);
+  if(!files.length) return;
+  if(!numeroAtual){ toast('Carregue um número de turma primeiro'); return; }
+
+  for(const file of files){
+    toast('Enviando ' + file.name + '...');
+    try{
+      let payload;
+      if(file.type.startsWith('image/')){
+        payload = await resizeImageFile(file);
+      } else {
+        payload = await readFileAsBase64(file);
+      }
+      const data = await cloudPost({
+        action:'uploadEvidencia',
+        evidencia:{
+          turmaCodigo: numeroAtual,
+          categoria: categoria,
+          nomeArquivo: file.name,
+          mimeType: payload.mimeType,
+          base64: payload.base64
+        }
+      });
+      if(!data || !data.ok) throw new Error((data&&data.error)||'falha ao enviar');
+      evidenciasAtuais.unshift(data.evidencia);
+    }catch(err){
+      toast('Erro ao enviar ' + file.name + ': ' + err.message);
+    }
+  }
+  e.target.value = '';
+  renderCategorias();
+  toast('Upload concluído');
+}
+
+function readFileAsBase64(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=> resolve({ base64: reader.result.split(',')[1], mimeType: file.type || 'application/octet-stream' });
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+function resizeImageFile(file, maxDim, quality){
+  maxDim = maxDim || 1600; quality = quality || 0.82;
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > h && w > maxDim){ h = Math.round(h*maxDim/w); w = maxDim; }
+        else if(h >= w && h > maxDim){ w = Math.round(w*maxDim/h); h = maxDim; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve({ base64: dataUrl.split(',')[1], mimeType: 'image/jpeg' });
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function excluirEvidencia(id){
+  if(!confirm('Excluir este arquivo?')) return;
+  try{
+    await cloudPost({action:'deleteEvidencia', id});
+    evidenciasAtuais = evidenciasAtuais.filter(e=>e.id!==id);
+    renderCategorias();
+    toast('Arquivo excluído');
+  }catch(err){
+    toast('Erro ao excluir: '+err.message);
+  }
+}
+
+/* ============================================================
+   COLETAR ESTADO DO FORMULÁRIO
+============================================================ */
+function coletarEstadoFormulario(){
+  const relEl = id => document.getElementById(id);
+  if(relEl('rel-curso')){
+    dossieState.relatorio = {
+      curso: relEl('rel-curso').value,
+      numero: relEl('rel-numero').value,
+      cliente: relEl('rel-cliente').value,
+      cnpj: relEl('rel-cnpj').value,
+      intercorrencias: relEl('rel-intercorrencias').value
+    };
+  }
+  if(relEl('conteudo-override')){
+    dossieState.conteudoOverride = relEl('conteudo-override').value;
+  }
+}
+
+/* ============================================================
+   SALVAR RASCUNHO / FINALIZAR / VISUALIZAR
+============================================================ */
+document.getElementById('btnSalvarRascunho').addEventListener('click', async ()=>{
+  await salvarDossie('rascunho');
+});
+document.getElementById('btnFinalizar').addEventListener('click', async ()=>{
+  await salvarDossie('finalizado');
+  toast('Dossiê finalizado e salvo — use "Visualizar / Imprimir" quando quiser gerar o PDF.');
+});
+document.getElementById('btnVisualizar').addEventListener('click', ()=>{
+  coletarEstadoFormulario();
+  gerarDossie();
+});
+
+async function salvarDossie(status){
+  if(!numeroAtual){ toast('Carregue um número de turma primeiro'); return; }
+  coletarEstadoFormulario();
+  dossieState.status = status;
+  atualizarStatusPill();
+  mostrarInfoBasica();
+  try{
+    await cloudPost({
+      action:'saveDossie',
+      dossie:{
+        turmaCodigo: numeroAtual,
+        relatorio: dossieState.relatorio,
+        conteudoOverride: dossieState.conteudoOverride,
+        categorias: dossieState.categorias,
+        status: status
+      }
+    });
+    toast(status === 'rascunho' ? 'Rascunho salvo' : 'Dossiê finalizado e salvo');
+  }catch(err){
+    toast('Erro ao salvar: '+err.message);
+  }
+}
+
+/* ============================================================
+   GERAR DOSSIÊ (impressão)
+============================================================ */
+function gerarDossie(){
+  if(!numeroAtual){ toast('Carregue um número de turma primeiro'); return; }
+  const root = document.getElementById('printRoot');
+  let html = buildCoverPage();
+  CATEGORIAS.forEach(cat=>{
+    if(dossieState.categorias[cat.key] === false) return; // excluída, não entra no dossiê
+    html += buildDividerPage(cat);
+    html += buildContentPage(cat);
+  });
+  root.innerHTML = html;
+  root.style.display = 'block';
+  document.title = 'Dossie_' + numeroAtual;
+  setTimeout(()=>window.print(), 350);
+}
+
+function buildCoverPage(){
+  const r = dossieState.relatorio;
+  const idx = CATEGORIAS.map(cat=>{
+    const incluido = dossieState.categorias[cat.key] !== false;
+    const count = evidenciasAtuais.filter(e=>e.categoria===cat.key).length;
+    let status;
+    if(!incluido) status = 'excluído deste dossiê';
+    else if(cat.kind==='conteudo') status = dossieState.conteudoOverride ? 'preenchido' : 'sem conteúdo cadastrado';
+    else if(cat.kind==='relatorio') status = 'preenchido';
+    else status = count ? count + ' arquivo(s) anexado(s)' : 'nenhum arquivo';
+    return `<div class="idx-item ${incluido?'':'excluded'}"><span><span class="n">${cat.num}</span>${cat.label}</span><span class="st">${status}</span></div>`;
+  }).join('');
+
+  return `<div class="pg pg-cover">
+    <div class="brand">
+      <h1>SafeSeg</h1>
+      <div class="tag">TREINAMENTOS</div>
+      <div class="info">52.112.925/0001-28 · SAFESEG SEGURANÇA DO TRABALHO · Dois Vizinhos — PR · safesegseguranca@gmail.com</div>
+    </div>
+    <div class="idx-title">DOSSIÊ TÉCNICO DO TREINAMENTO</div>
+    <table>
+      <tr><td style="background:#f0f0f0;font-weight:bold;width:20%;">Curso</td><td colspan="3">${r.curso||''}</td></tr>
+      <tr><td style="background:#f0f0f0;font-weight:bold;">Número da turma</td><td colspan="3">${r.numero||''}</td></tr>
+      <tr><td style="background:#f0f0f0;font-weight:bold;">Empresa</td><td>${r.cliente||'-'}</td><td style="background:#f0f0f0;font-weight:bold;">CNPJ</td><td>${r.cnpj||'-'}</td></tr>
+    </table>
+    <div class="idx-title">ÍNDICE DESTE DOSSIÊ</div>
+    ${idx}
+  </div>`;
+}
+
+function buildDividerPage(cat){
+  const r = dossieState.relatorio;
+  return `<div class="pg pg-divider">
+    <div class="num">${cat.num}</div>
+    <div class="title">${cat.label}</div>
+    <div class="under"></div>
+    <div class="sub">Turma ${r.numero} — ${r.curso}</div>
+  </div>`;
+}
+
+function buildContentPage(cat){
+  if(cat.kind === 'relatorio'){
+    const r = dossieState.relatorio;
+    return `<div class="pg pg-content"><h4>${cat.label}</h4>
+      <table class="report-table">
+        <tr><td class="lb">Curso</td><td>${r.curso||''}</td></tr>
+        <tr><td class="lb">Número da turma</td><td>${r.numero||''}</td></tr>
+        <tr><td class="lb">Empresa (cliente)</td><td>${r.cliente||''}</td></tr>
+        <tr><td class="lb">CNPJ</td><td>${r.cnpj||'-'}</td></tr>
+        <tr><td class="lb">Intercorrências / Observações</td><td style="white-space:pre-wrap;">${r.intercorrencias||'Nenhuma intercorrência registrada.'}</td></tr>
+      </table>
+    </div>`;
+  }
+
+  if(cat.kind === 'conteudo'){
+    const txt = dossieState.conteudoOverride
+      ? dossieState.conteudoOverride.split('\n').filter(l=>l.trim()).map(l=>'• '+l.trim()).join('\n')
+      : '(nenhum conteúdo programático preenchido)';
+    return `<div class="pg pg-content"><h4>${cat.label}</h4><div class="content-text">${txt}</div></div>`;
+  }
+
+  const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
+  if(itens.length === 0){
+    return `<div class="pg pg-content"><h4>${cat.label}</h4>
+      <div class="content-text">Nenhum arquivo digital anexado nesta categoria. Espaço reservado para inserir documento físico na pasta.</div></div>`;
+  }
+
+  if(cat.isPhoto){
+    let html = `<div class="pg pg-content"><h4>${cat.label}</h4><div class="photo-grid">`;
+    itens.forEach(ev=>{
+      const url = 'https://drive.google.com/uc?export=view&id=' + ev.driveFileId;
+      html += `<div class="ph"><img src="${url}"><div class="cap">${ev.nomeArquivo}</div></div>`;
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  let html = `<div class="pg pg-content"><h4>${cat.label}</h4><ul class="doc-list">`;
+  itens.forEach(ev=>{
+    html += `<li><span class="fn">${ev.nomeArquivo}</span><span class="desc">${ev.driveUrl}</span></li>`;
+  });
+  html += '</ul></div>';
+  return html;
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+document.getElementById('btnSaveAppsUrl').addEventListener('click', ()=>{
+  const v = document.getElementById('fAppsUrl').value.trim();
+  setAppsUrl(v);
+  checkCloudStatus();
+});
+document.getElementById('fAppsUrl').value = getAppsUrl();
+checkCloudStatus();
+</script>
+</body>
+</html>
