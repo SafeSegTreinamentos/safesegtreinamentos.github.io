@@ -16,6 +16,7 @@
   --muted:#9AA0A6;
   --ok:#22C55E;
   --danger:#EF4444;
+  --lh-top:38mm; /* espaço reservado no topo de cada folha para papel timbrado */
 }
 *{box-sizing:border-box;}
 body{margin:0;font-family:'Inter',Arial,sans-serif;background:var(--graphite);color:var(--text);}
@@ -71,30 +72,28 @@ textarea{resize:vertical;min-height:70px;}
 .item .item-name{font-size:10.5px;padding:6px 8px;color:var(--muted);word-break:break-all;}
 .item .item-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:var(--danger);border:none;border-radius:4px;width:20px;height:20px;font-size:12px;cursor:pointer;}
 .empty-note{font-size:12.5px;color:var(--muted);font-style:italic;}
+.dossie-item{background:var(--graphite3);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.dossie-item .di-code{font-family:'Bebas Neue',Arial,sans-serif;color:var(--amber);font-size:17px;letter-spacing:.5px;}
+.dossie-item .di-meta{font-size:12.5px;color:var(--muted);}
 .toast{position:fixed;bottom:20px;right:20px;background:var(--graphite3);border:1px solid var(--amber);color:#fff;padding:12px 18px;border-radius:8px;z-index:999;display:none;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.5);max-width:340px;}
 .action-bar{position:sticky;bottom:0;background:var(--graphite2);border-top:1px solid var(--line);padding:14px 20px;display:flex;justify-content:flex-end;gap:10px;margin:0 -20px;flex-wrap:wrap;}
 
 /* ===== IMPRESSÃO ===== */
 #printRoot{display:none;}
-.pg{background:#fff;color:#111;width:210mm;min-height:296mm;margin:0 auto 24px;padding:16mm 16mm;font-family:Arial,Helvetica,sans-serif;box-shadow:0 0 20px rgba(0,0,0,.4);}
-.pg-cover .brand{text-align:center;margin-bottom:30px;}
-.pg-cover h1{font-family:'Bebas Neue',Arial,sans-serif;font-size:30px;margin:6px 0 0;}
-.pg-cover .tag{color:#F59E0B;font-weight:800;letter-spacing:2px;font-size:12px;}
-.pg-cover .info{font-size:10px;color:#333;margin-top:4px;}
-.pg-cover .idx-title{background:#111;color:#F59E0B;text-align:center;font-weight:800;font-size:14px;letter-spacing:1px;padding:8px;margin:26px 0 14px;}
+.pg{background:#fff;color:#111;width:210mm;min-height:296mm;margin:0 auto 24px;padding:var(--lh-top) 16mm 16mm;font-family:Arial,Helvetica,sans-serif;box-shadow:0 0 20px rgba(0,0,0,.4);}
+.pg-cover .idx-title{background:#111;color:#F59E0B;text-align:center;font-weight:800;font-size:14px;letter-spacing:1px;padding:8px;margin:0 0 14px;}
 .pg-cover table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px;}
 .pg-cover table td,.pg-cover table th{border:1px solid #111;padding:6px 8px;}
 .pg-cover .idx-item{display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px solid #ddd;font-size:13px;}
-.pg-cover .idx-item.excluded{color:#bbb;text-decoration:line-through;}
 .pg-cover .idx-item .n{color:#B45309;font-weight:800;margin-right:8px;}
 .pg-cover .idx-item .st{font-size:11px;color:#888;}
-.pg-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:250mm;}
+.pg-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:225mm;}
 .pg-divider .num{font-family:'Bebas Neue',Arial,sans-serif;font-size:80px;color:#111;opacity:.12;}
 .pg-divider .title{font-family:'Bebas Neue',Arial,sans-serif;font-size:34px;letter-spacing:1px;color:#111;margin-top:-40px;}
 .pg-divider .under{width:120px;height:5px;background:#F59E0B;margin:14px 0;}
 .pg-divider .sub{font-size:12px;color:#666;}
 .pg-content h4{font-family:'Bebas Neue',Arial,sans-serif;background:#111;color:#F59E0B;text-align:center;padding:8px;font-size:15px;letter-spacing:1px;margin:0 0 14px;}
-.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .photo-grid .ph{border:1px solid #111;padding:6px;}
 .photo-grid img{width:100%;height:70mm;object-fit:cover;display:block;}
 .photo-grid .cap{font-size:9px;color:#333;margin-top:4px;}
@@ -103,9 +102,12 @@ textarea{resize:vertical;min-height:70px;}
 .doc-list .fn{font-weight:700;}
 .doc-list .desc{color:#555;}
 .content-text{border:1px solid #111;padding:12px 14px;font-size:12px;line-height:1.7;white-space:pre-wrap;}
-.report-table{width:100%;border-collapse:collapse;font-size:12px;}
+.report-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;}
 .report-table td{border:1px solid #111;padding:8px 10px;}
 .report-table .lb{background:#f0f0f0;font-weight:bold;width:28%;}
+.handwrite-box{margin-top:24px;}
+.hw-label{font-size:10.5px;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.hw-lines{border:1px solid #ccc;height:170mm;background-image:repeating-linear-gradient(to bottom, transparent, transparent 27px, #ddd 28px);}
 
 @media print{
   body{background:#fff;}
@@ -141,8 +143,11 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 
   <div class="card">
-    <h2>1. Número da turma</h2>
-    <div class="row">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2 style="margin:0;">1. Número da turma</h2>
+      <button class="btn ghost small" id="btnVerDossies">📂 Ver dossiês já feitos</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
       <div>
         <label>Digite o número/código que identifica esta turma</label>
         <input id="fNumeroTurma" placeholder="Ex: 2026071401 ou qualquer identificação sua">
@@ -150,6 +155,11 @@ textarea{resize:vertical;min-height:70px;}
       <div><button class="btn secondary small" id="btnCarregarTurma">Carregar / Criar dossiê</button></div>
     </div>
     <div class="empty-note" style="margin-top:6px;">Se já existir um rascunho salvo com esse número, ele é carregado automaticamente. Se não existir, começa um dossiê novo.</div>
+  </div>
+
+  <div class="card" id="listaDossiesCard" style="display:none;">
+    <h2>Dossiês já feitos</h2>
+    <div id="listaDossies"></div>
   </div>
 
   <div class="turma-info" id="turmaInfo">
@@ -165,6 +175,10 @@ textarea{resize:vertical;min-height:70px;}
 
 <div class="action-bar no-print" id="actionBar" style="display:none;">
   <div class="empty-note" style="flex:1;align-self:center;">Salve o rascunho quantas vezes precisar. Quando estiver pronto, finalize — e gere o PDF quando quiser, mesmo em outro dia ou aparelho.</div>
+  <label class="btn ghost small" style="cursor:pointer;margin:0;align-self:center;">
+    📤 Salvar PDF final na pasta
+    <input type="file" id="fUploadPdfFinal" accept="application/pdf" style="display:none;">
+  </label>
   <button class="btn ghost" id="btnVisualizar">🖨 Visualizar / Gerar PDF</button>
   <button class="btn secondary" id="btnSalvarRascunho">💾 Salvar rascunho</button>
   <button class="btn" id="btnFinalizar">✅ Finalizar dossiê</button>
@@ -175,14 +189,15 @@ textarea{resize:vertical;min-height:70px;}
 
 <script>
 /* ============================================================
-   CATEGORIAS (na ordem do dossiê físico)
+   CATEGORIAS (números fixos aqui na tela de edição — no PDF final
+   a numeração é recalculada só com as categorias incluídas)
 ============================================================ */
 const CATEGORIAS = [
   { key:'relatorio',    num:'01', label:'Relatório do Treinamento',           kind:'relatorio' },
   { key:'presenca',     num:'02', label:'Lista de Presença',                  kind:'upload' },
-  { key:'avaliacoes',   num:'03', label:'Avaliações',                         kind:'upload' },
-  { key:'fotos',        num:'04', label:'Evidências Fotográficas',            kind:'upload', isPhoto:true },
-  { key:'certificados', num:'05', label:'Certificados',                       kind:'upload' },
+  { key:'avaliacoes',   num:'03', label:'Avaliações',                         kind:'avaliacoes' },
+  { key:'fotos',        num:'04', label:'Evidências Fotográficas',            kind:'upload' },
+  { key:'certificados', num:'05', label:'Certificados',                       kind:'certificados' },
   { key:'instrutor',    num:'06', label:'Documentação do Instrutor',          kind:'upload' },
   { key:'conteudo',     num:'07', label:'Conteúdo Programático',              kind:'conteudo' },
   { key:'anexos',       num:'08', label:'Anexos (APR, PET, Checklists)',      kind:'upload' },
@@ -191,13 +206,13 @@ const CATEGORIAS = [
 let numeroAtual = null;
 let evidenciasAtuais = [];
 let cursosCache = [];
-let dossieState = null; // { relatorio:{curso,numero,cliente,cnpj,intercorrencias}, conteudoOverride:'', categorias:{}, status }
+let dossieState = null;
 
 function defaultDossieState(){
   const cats = {};
   CATEGORIAS.forEach(c => cats[c.key] = true);
   return {
-    relatorio: { curso:'', numero:'', cliente:'', cnpj:'', intercorrencias:'' },
+    relatorio: { curso:'', numero:'', cliente:'', cnpj:'', notasAvaliacoes:'', listaCertificados:'' },
     conteudoOverride: '',
     categorias: cats,
     status: 'rascunho'
@@ -277,6 +292,8 @@ async function carregarOuCriarDossie(){
     }catch(err){ /* segue com padrão se falhar */ }
 
     dossieState = dossieSalvo || defaultDossieState();
+    if(!dossieState.relatorio.notasAvaliacoes) dossieState.relatorio.notasAvaliacoes = '';
+    if(!dossieState.relatorio.listaCertificados) dossieState.relatorio.listaCertificados = '';
     if(!dossieState.relatorio.numero) dossieState.relatorio.numero = numero;
     numeroAtual = numero;
 
@@ -290,6 +307,44 @@ async function carregarOuCriarDossie(){
     toast('Erro ao carregar: '+err.message);
   }
 }
+document.getElementById('btnVerDossies').addEventListener('click', toggleListaDossies);
+async function toggleListaDossies(){
+  const card = document.getElementById('listaDossiesCard');
+  const abrindo = card.style.display === 'none';
+  card.style.display = abrindo ? 'block' : 'none';
+  if(!abrindo) return;
+  if(!getAppsUrl()){ toast('Conecte a sincronização primeiro'); card.style.display='none'; return; }
+  document.getElementById('listaDossies').innerHTML = '<div class="empty-note">Carregando...</div>';
+  try{
+    const data = await cloudGet({action:'listDossies'});
+    if(!data || !data.ok) throw new Error((data&&data.error)||'falha ao listar');
+    renderListaDossies(data.dossies || []);
+  }catch(err){
+    document.getElementById('listaDossies').innerHTML = '<div class="empty-note">Erro ao carregar: '+err.message+'</div>';
+  }
+}
+function renderListaDossies(lista){
+  const box = document.getElementById('listaDossies');
+  if(!lista.length){ box.innerHTML = '<div class="empty-note">Nenhum dossiê criado ainda.</div>'; return; }
+  box.innerHTML = lista.map(d=>`
+    <div class="dossie-item">
+      <div>
+        <div class="di-code">${d.turmaCodigo}</div>
+        <div class="di-meta">${d.curso||'(curso não informado)'} · ${d.cliente||'sem empresa'} · <span class="status-pill ${d.status}" style="padding:2px 8px;font-size:9px;">${d.status}</span></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${d.pdfUrl ? `<a class="btn secondary small" href="${d.pdfUrl}" target="_blank" rel="noopener">Abrir PDF salvo</a>` : ''}
+        <button class="btn ghost small" onclick="abrirDossieDaLista('${d.turmaCodigo}')">Carregar</button>
+      </div>
+    </div>`).join('');
+}
+function abrirDossieDaLista(numero){
+  document.getElementById('fNumeroTurma').value = numero;
+  document.getElementById('listaDossiesCard').style.display = 'none';
+  carregarOuCriarDossie();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
 function mostrarInfoBasica(){
   const box = document.getElementById('turmaInfo');
   box.classList.add('show');
@@ -315,7 +370,7 @@ async function carregarEvidencias(numero){
 }
 
 /* ============================================================
-   RENDERIZAR CATEGORIAS
+   RENDERIZAR CATEGORIAS (tela de edição)
 ============================================================ */
 function renderCategorias(){
   const box = document.getElementById('catSection');
@@ -323,9 +378,9 @@ function renderCategorias(){
   box.innerHTML = CATEGORIAS.map(cat=>{
     const incluido = dossieState.categorias[cat.key] !== false;
     let bodyHtml = '';
+    const r = dossieState.relatorio;
 
     if(cat.kind === 'relatorio'){
-      const r = dossieState.relatorio;
       const opcoesCurso = cursosCache.map(c=>
         `<option value="${esc(c.nome)}" ${c.nome===r.curso?'selected':''}>${esc(c.nome)}</option>`
       ).join('');
@@ -343,18 +398,47 @@ function renderCategorias(){
         <div class="row">
           <div class="field"><label>Empresa (cliente)</label><input id="rel-cliente" value="${esc(r.cliente)}" placeholder="Nome da empresa"></div>
           <div class="field"><label>CNPJ</label><input id="rel-cnpj" value="${esc(r.cnpj)}" placeholder="00.000.000/0000-00"></div>
-        </div>
+        </div>`;
+    } else if(cat.kind === 'avaliacoes'){
+      const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
+      bodyHtml = `
         <div class="field">
-          <label>Intercorrências / Informações importantes</label>
-          <textarea id="rel-intercorrencias" placeholder="Alguma ocorrência durante o treinamento, observação para o cliente, etc. (opcional)">${esc(r.intercorrencias)}</textarea>
+          <label>Notas (uma linha por aluno — Nome, Nota Prática, Nota Teórica)</label>
+          <textarea id="notas-avaliacoes" placeholder="Ex: João da Silva, 8.5, 9.0" style="min-height:100px;">${esc(r.notasAvaliacoes)}</textarea>
+        </div>
+        <div class="cat-head" style="margin-bottom:0;">
+          <label style="margin:0;flex:1;">Ou anexe foto/arquivo da tabela física</label>
+          <label class="file-input-label">
+            + Adicionar foto ou arquivo
+            <input type="file" multiple style="display:none;" data-cat="${cat.key}" class="cat-file-input" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx">
+          </label>
+        </div>
+        <div class="item-grid" id="grid-${cat.key}">
+          ${itens.length ? itens.map(itemHtml).join('') : '<div class="empty-note">Nenhum arquivo anexado ainda.</div>'}
+        </div>`;
+    } else if(cat.kind === 'certificados'){
+      const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
+      bodyHtml = `
+        <div class="field">
+          <label>Certificados emitidos (uma linha por aluno — Nome, CPF, Número do Certificado)</label>
+          <textarea id="lista-certificados" placeholder="Ex: João da Silva, 000.000.000-00, 2026071601-01" style="min-height:100px;">${esc(r.listaCertificados)}</textarea>
+        </div>
+        <div class="cat-head" style="margin-bottom:0;">
+          <label style="margin:0;flex:1;">QR Code do validador e outros arquivos</label>
+          <label class="file-input-label">
+            + Adicionar QR Code / arquivo
+            <input type="file" multiple style="display:none;" data-cat="${cat.key}" class="cat-file-input" accept="image/*,.pdf">
+          </label>
+        </div>
+        <div class="item-grid" id="grid-${cat.key}">
+          ${itens.length ? itens.map(itemHtml).join('') : '<div class="empty-note">Nenhum arquivo anexado ainda.</div>'}
         </div>`;
     } else if(cat.kind === 'conteudo'){
       bodyHtml = `
-        <div class="cat-head" style="margin-bottom:8px;">
-          <label style="margin:0;flex:1;">Conteúdo programático (preenchido automaticamente ao escolher o curso — pode editar à vontade)</label>
-          <button type="button" class="btn ghost small" id="btnResetConteudo">↺ Usar padrão do curso</button>
-        </div>
-        <textarea id="conteudo-override" style="min-height:120px;">${esc(dossieState.conteudoOverride)}</textarea>`;
+        <div class="field">
+          <label>Conteúdo programático (adicione manualmente — cole do seu banco de propostas, se preferir)</label>
+          <textarea id="conteudo-override" style="min-height:140px;">${esc(dossieState.conteudoOverride)}</textarea>
+        </div>`;
     } else {
       const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
       bodyHtml = `
@@ -393,28 +477,6 @@ function renderCategorias(){
       card.classList.toggle('excluded', !e.target.checked);
     });
   });
-
-  const cursoSel = document.getElementById('rel-curso');
-  if(cursoSel){
-    cursoSel.addEventListener('change', (e)=>{
-      const cursoNome = e.target.value;
-      const conteudoEl = document.getElementById('conteudo-override');
-      if(conteudoEl && !conteudoEl.value.trim()){
-        const c = cursosCache.find(c=>c.nome===cursoNome);
-        if(c) conteudoEl.value = c.conteudo || '';
-      }
-    });
-  }
-  const btnReset = document.getElementById('btnResetConteudo');
-  if(btnReset){
-    btnReset.addEventListener('click', ()=>{
-      const cursoNome = document.getElementById('rel-curso').value;
-      const c = cursosCache.find(c=>c.nome===cursoNome);
-      if(!c){ toast('Selecione um curso primeiro'); return; }
-      document.getElementById('conteudo-override').value = c.conteudo || '';
-      toast('Conteúdo padrão restaurado');
-    });
-  }
 }
 function esc(s){ return (s==null?'':String(s)).replace(/"/g,'&quot;'); }
 
@@ -442,8 +504,7 @@ async function onFilesSelected(e){
   if(!files.length) return;
   if(!numeroAtual){ toast('Carregue um número de turma primeiro'); return; }
 
-  // preserva o que já está digitado no formulário antes de mexer em qualquer coisa
-  coletarEstadoFormulario();
+  coletarEstadoFormulario(); // preserva o que já está digitado antes de mexer em qualquer coisa
 
   let algumErro = false;
   for(const file of files){
@@ -482,7 +543,7 @@ function refreshGridForCategoria(catKey){
   const grid = document.getElementById('grid-' + catKey);
   if(!grid) return;
   const itens = evidenciasAtuais.filter(e=>e.categoria===catKey);
-  grid.innerHTML = itens.length ? itens.map(itemHtml).join('') : '<div class="empty-note">Nenhum arquivo anexado nesta categoria ainda.</div>';
+  grid.innerHTML = itens.length ? itens.map(itemHtml).join('') : '<div class="empty-note">Nenhum arquivo anexado ainda.</div>';
 }
 
 function readFileAsBase64(file){
@@ -537,17 +598,14 @@ async function excluirEvidencia(id){
 function coletarEstadoFormulario(){
   const relEl = id => document.getElementById(id);
   if(relEl('rel-curso')){
-    dossieState.relatorio = {
-      curso: relEl('rel-curso').value,
-      numero: relEl('rel-numero').value,
-      cliente: relEl('rel-cliente').value,
-      cnpj: relEl('rel-cnpj').value,
-      intercorrencias: relEl('rel-intercorrencias').value
-    };
+    dossieState.relatorio.curso = relEl('rel-curso').value;
+    dossieState.relatorio.numero = relEl('rel-numero').value;
+    dossieState.relatorio.cliente = relEl('rel-cliente').value;
+    dossieState.relatorio.cnpj = relEl('rel-cnpj').value;
   }
-  if(relEl('conteudo-override')){
-    dossieState.conteudoOverride = relEl('conteudo-override').value;
-  }
+  if(relEl('notas-avaliacoes')) dossieState.relatorio.notasAvaliacoes = relEl('notas-avaliacoes').value;
+  if(relEl('lista-certificados')) dossieState.relatorio.listaCertificados = relEl('lista-certificados').value;
+  if(relEl('conteudo-override')) dossieState.conteudoOverride = relEl('conteudo-override').value;
 }
 
 /* ============================================================
@@ -558,10 +616,14 @@ document.getElementById('btnSalvarRascunho').addEventListener('click', async ()=
 });
 document.getElementById('btnFinalizar').addEventListener('click', async ()=>{
   await salvarDossie('finalizado');
-  toast('Dossiê finalizado e salvo — use "Visualizar / Imprimir" quando quiser gerar o PDF.');
+  toast('Dossiê finalizado e salvo — use "Visualizar / Gerar PDF" quando quiser gerar o documento.');
 });
-document.getElementById('btnVisualizar').addEventListener('click', ()=>{
+document.getElementById('btnVisualizar').addEventListener('click', async ()=>{
   coletarEstadoFormulario();
+  if(numeroAtual){
+    toast('Atualizando evidências antes de gerar...');
+    await carregarEvidencias(numeroAtual); // garante que fotos/arquivos recém-enviados entrem no PDF
+  }
   gerarDossie();
 });
 
@@ -589,42 +651,89 @@ async function salvarDossie(status){
 }
 
 /* ============================================================
+   RENUMERAÇÃO PARA IMPRESSÃO (só categorias incluídas)
+============================================================ */
+function getCategoriasParaImpressao(){
+  const incluidas = CATEGORIAS.filter(cat => dossieState.categorias[cat.key] !== false);
+  return incluidas.map((cat, i) => Object.assign({}, cat, { printNum: String(i+1).padStart(2,'0') }));
+}
+function splitItens(itens){
+  const imagens = itens.filter(e => (e.mimeType||'').startsWith('image/'));
+  const documentos = itens.filter(e => !(e.mimeType||'').startsWith('image/'));
+  return { imagens, documentos };
+}
+function renderPhotoGridHtml(imagens){
+  if(!imagens.length) return '';
+  let html = '<div class="photo-grid">';
+  imagens.forEach(ev=>{
+    const url = 'https://drive.google.com/uc?export=view&id=' + ev.driveFileId;
+    html += `<div class="ph"><img src="${url}"><div class="cap">${ev.nomeArquivo}</div></div>`;
+  });
+  html += '</div>';
+  return html;
+}
+function renderDocListHtml(documentos){
+  if(!documentos.length) return '';
+  let html = '<ul class="doc-list">';
+  documentos.forEach(ev=>{
+    html += `<li><span class="fn">${ev.nomeArquivo}</span><span class="desc">${ev.driveUrl}</span></li>`;
+  });
+  html += '</ul>';
+  return html;
+}
+function parseLinhasTabela(texto){
+  return (texto||'').split('\n').map(l=>l.trim()).filter(Boolean).map(l=>l.split(/[,;\t]/).map(p=>p.trim()));
+}
+
+/* ============================================================
    GERAR DOSSIÊ (impressão)
 ============================================================ */
 function gerarDossie(){
   if(!numeroAtual){ toast('Carregue um número de turma primeiro'); return; }
   const root = document.getElementById('printRoot');
-  let html = buildCoverPage();
-  CATEGORIAS.forEach(cat=>{
-    if(dossieState.categorias[cat.key] === false) return; // excluída, não entra no dossiê
-    html += buildDividerPage(cat);
-    html += buildContentPage(cat);
+  const catsImpressao = getCategoriasParaImpressao();
+
+  let html = buildCoverPage(catsImpressao);
+  catsImpressao.forEach(cat=>{
+    if(cat.kind === 'conteudo'){
+      html += buildConteudoPage(cat);
+    } else if(cat.kind === 'relatorio'){
+      html += buildDividerPage(cat);
+      html += buildRelatorioPage(cat);
+    } else if(cat.kind === 'avaliacoes'){
+      html += buildDividerPage(cat);
+      html += buildAvaliacoesPage(cat);
+    } else if(cat.kind === 'certificados'){
+      html += buildDividerPage(cat);
+      html += buildCertificadosPage(cat);
+    } else {
+      html += buildDividerPage(cat);
+      html += buildContentPage(cat);
+    }
   });
+
   root.innerHTML = html;
   root.style.display = 'block';
   document.title = 'Dossie_' + numeroAtual;
   setTimeout(()=>window.print(), 350);
 }
 
-function buildCoverPage(){
+function buildCoverPage(catsImpressao){
   const r = dossieState.relatorio;
-  const idx = CATEGORIAS.map(cat=>{
-    const incluido = dossieState.categorias[cat.key] !== false;
-    const count = evidenciasAtuais.filter(e=>e.categoria===cat.key).length;
+  const idx = catsImpressao.map(cat=>{
     let status;
-    if(!incluido) status = 'excluído deste dossiê';
-    else if(cat.kind==='conteudo') status = dossieState.conteudoOverride ? 'preenchido' : 'sem conteúdo cadastrado';
+    if(cat.kind==='conteudo') status = dossieState.conteudoOverride ? 'preenchido' : 'sem conteúdo cadastrado';
     else if(cat.kind==='relatorio') status = 'preenchido';
-    else status = count ? count + ' arquivo(s) anexado(s)' : 'nenhum arquivo';
-    return `<div class="idx-item ${incluido?'':'excluded'}"><span><span class="n">${cat.num}</span>${cat.label}</span><span class="st">${status}</span></div>`;
+    else if(cat.kind==='avaliacoes') status = (r.notasAvaliacoes||'').trim() ? 'notas registradas' : (evidenciasAtuais.filter(e=>e.categoria===cat.key).length ? 'arquivo(s) anexado(s)' : 'pendente');
+    else if(cat.kind==='certificados') status = (r.listaCertificados||'').trim() ? 'lista registrada' : (evidenciasAtuais.filter(e=>e.categoria===cat.key).length ? 'arquivo(s) anexado(s)' : 'pendente');
+    else {
+      const count = evidenciasAtuais.filter(e=>e.categoria===cat.key).length;
+      status = count ? count + ' arquivo(s) anexado(s)' : 'nenhum arquivo';
+    }
+    return `<div class="idx-item"><span><span class="n">${cat.printNum}</span>${cat.label}</span><span class="st">${status}</span></div>`;
   }).join('');
 
   return `<div class="pg pg-cover">
-    <div class="brand">
-      <h1>SafeSeg</h1>
-      <div class="tag">TREINAMENTOS</div>
-      <div class="info">52.112.925/0001-28 · SAFESEG SEGURANÇA DO TRABALHO · Dois Vizinhos — PR · safesegseguranca@gmail.com</div>
-    </div>
     <div class="idx-title">DOSSIÊ TÉCNICO DO TREINAMENTO</div>
     <table>
       <tr><td style="background:#f0f0f0;font-weight:bold;width:20%;">Curso</td><td colspan="3">${r.curso||''}</td></tr>
@@ -639,61 +748,108 @@ function buildCoverPage(){
 function buildDividerPage(cat){
   const r = dossieState.relatorio;
   return `<div class="pg pg-divider">
-    <div class="num">${cat.num}</div>
+    <div class="num">${cat.printNum}</div>
     <div class="title">${cat.label}</div>
     <div class="under"></div>
     <div class="sub">Turma ${r.numero} — ${r.curso}</div>
   </div>`;
 }
 
+function buildRelatorioPage(cat){
+  const r = dossieState.relatorio;
+  return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4>
+    <table class="report-table">
+      <tr><td class="lb">Curso</td><td>${r.curso||''}</td></tr>
+      <tr><td class="lb">Número da turma</td><td>${r.numero||''}</td></tr>
+      <tr><td class="lb">Empresa (cliente)</td><td>${r.cliente||''}</td></tr>
+      <tr><td class="lb">CNPJ</td><td>${r.cnpj||'-'}</td></tr>
+    </table>
+    <div class="handwrite-box">
+      <div class="hw-label">Observações / registro manual</div>
+      <div class="hw-lines"></div>
+    </div>
+  </div>`;
+}
+
+function buildConteudoPage(cat){
+  const txt = dossieState.conteudoOverride
+    ? dossieState.conteudoOverride.split('\n').filter(l=>l.trim()).map(l=>'• '+l.trim()).join('\n')
+    : '(nenhum conteúdo programático preenchido)';
+  return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4><div class="content-text">${txt}</div></div>`;
+}
+
+function buildAvaliacoesPage(cat){
+  const r = dossieState.relatorio;
+  const linhas = parseLinhasTabela(r.notasAvaliacoes);
+  let tabelaHtml = '';
+  if(linhas.length){
+    tabelaHtml = '<table class="report-table"><tr><td class="lb">Nome</td><td class="lb">Nota Prática</td><td class="lb">Nota Teórica</td></tr>';
+    linhas.forEach(p=>{ tabelaHtml += `<tr><td>${p[0]||''}</td><td>${p[1]||''}</td><td>${p[2]||''}</td></tr>`; });
+    tabelaHtml += '</table>';
+  }
+  const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
+  const { imagens, documentos } = splitItens(itens);
+  if(!tabelaHtml && itens.length===0){
+    return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4><div class="content-text">Nenhuma nota ou arquivo anexado. Avaliações físicas entregues separadamente, quando aplicável.</div></div>`;
+  }
+  return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4>${tabelaHtml}${renderPhotoGridHtml(imagens)}${renderDocListHtml(documentos)}</div>`;
+}
+
+function buildCertificadosPage(cat){
+  const r = dossieState.relatorio;
+  const linhas = parseLinhasTabela(r.listaCertificados);
+  let tabelaHtml = '';
+  if(linhas.length){
+    tabelaHtml = '<table class="report-table" style="margin-top:14px;"><tr><td class="lb">Nome</td><td class="lb">CPF</td><td class="lb">Nº do Certificado</td></tr>';
+    linhas.forEach(p=>{ tabelaHtml += `<tr><td>${p[0]||''}</td><td>${p[1]||''}</td><td>${p[2]||''}</td></tr>`; });
+    tabelaHtml += '</table>';
+  }
+  const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
+  const { imagens, documentos } = splitItens(itens);
+  if(!tabelaHtml && itens.length===0){
+    return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4><div class="content-text">Nenhum certificado registrado ainda.</div></div>`;
+  }
+  return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4>${renderPhotoGridHtml(imagens)}${tabelaHtml}${renderDocListHtml(documentos)}</div>`;
+}
+
 function buildContentPage(cat){
-  if(cat.kind === 'relatorio'){
-    const r = dossieState.relatorio;
-    return `<div class="pg pg-content"><h4>${cat.label}</h4>
-      <table class="report-table">
-        <tr><td class="lb">Curso</td><td>${r.curso||''}</td></tr>
-        <tr><td class="lb">Número da turma</td><td>${r.numero||''}</td></tr>
-        <tr><td class="lb">Empresa (cliente)</td><td>${r.cliente||''}</td></tr>
-        <tr><td class="lb">CNPJ</td><td>${r.cnpj||'-'}</td></tr>
-        <tr><td class="lb">Intercorrências / Observações</td><td style="white-space:pre-wrap;">${r.intercorrencias||'Nenhuma intercorrência registrada.'}</td></tr>
-      </table>
-    </div>`;
-  }
-
-  if(cat.kind === 'conteudo'){
-    const txt = dossieState.conteudoOverride
-      ? dossieState.conteudoOverride.split('\n').filter(l=>l.trim()).map(l=>'• '+l.trim()).join('\n')
-      : '(nenhum conteúdo programático preenchido)';
-    return `<div class="pg pg-content"><h4>${cat.label}</h4><div class="content-text">${txt}</div></div>`;
-  }
-
   const itens = evidenciasAtuais.filter(e=>e.categoria===cat.key);
   if(itens.length === 0){
-    return `<div class="pg pg-content"><h4>${cat.label}</h4>
+    return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4>
       <div class="content-text">Nenhum arquivo digital anexado nesta categoria. Espaço reservado para inserir documento físico na pasta.</div></div>`;
   }
-
-  if(cat.isPhoto){
-    let html = `<div class="pg pg-content"><h4>${cat.label}</h4><div class="photo-grid">`;
-    itens.forEach(ev=>{
-      const url = 'https://drive.google.com/uc?export=view&id=' + ev.driveFileId;
-      html += `<div class="ph"><img src="${url}"><div class="cap">${ev.nomeArquivo}</div></div>`;
-    });
-    html += '</div></div>';
-    return html;
-  }
-
-  let html = `<div class="pg pg-content"><h4>${cat.label}</h4><ul class="doc-list">`;
-  itens.forEach(ev=>{
-    html += `<li><span class="fn">${ev.nomeArquivo}</span><span class="desc">${ev.driveUrl}</span></li>`;
-  });
-  html += '</ul></div>';
-  return html;
+  const { imagens, documentos } = splitItens(itens);
+  return `<div class="pg pg-content"><h4>${cat.printNum} - ${cat.label}</h4>${renderPhotoGridHtml(imagens)}${renderDocListHtml(documentos)}</div>`;
 }
 
 /* ============================================================
    INIT
 ============================================================ */
+document.getElementById('fUploadPdfFinal').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(!numeroAtual){ toast('Carregue um número de turma primeiro'); e.target.value=''; return; }
+  if(file.type !== 'application/pdf'){ toast('Selecione um arquivo PDF'); e.target.value=''; return; }
+  toast('Enviando PDF final...');
+  try{
+    const payload = await readFileAsBase64(file);
+    const data = await cloudPost({
+      action:'uploadDossiePdf',
+      dossiePdf:{
+        turmaCodigo: numeroAtual,
+        nomeArquivo: file.name,
+        mimeType: payload.mimeType,
+        base64: payload.base64
+      }
+    });
+    if(!data || !data.ok) throw new Error((data&&data.error)||'falha ao enviar');
+    toast('PDF salvo na pasta de dossiês ✅');
+  }catch(err){
+    toast('Erro ao salvar PDF: '+err.message, 7000);
+  }
+  e.target.value = '';
+});
+
 document.getElementById('btnSaveAppsUrl').addEventListener('click', ()=>{
   const v = document.getElementById('fAppsUrl').value.trim();
   setAppsUrl(v);
