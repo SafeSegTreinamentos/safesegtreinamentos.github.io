@@ -223,7 +223,8 @@ function defaultDossieState(){
    SINCRONIZAÇÃO
 ============================================================ */
 const LS_APPS_URL = 'safeseg_apps_url_v1';
-function getAppsUrl(){ return (localStorage.getItem(LS_APPS_URL)||'').trim(); }
+const DEFAULT_APPS_URL = 'https://script.google.com/macros/s/AKfycbzNkzIZDoVxpDHBRxtOA0bGAMli4dmVKuoXrdGfW66jE4aLd6SiOZhqleWbfbvySonAoA/exec';
+function getAppsUrl(){ return (localStorage.getItem(LS_APPS_URL)||DEFAULT_APPS_URL).trim(); }
 function setAppsUrl(u){ localStorage.setItem(LS_APPS_URL, u.trim()); }
 
 async function cloudGet(params){
